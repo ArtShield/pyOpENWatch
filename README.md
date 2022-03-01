@@ -41,3 +41,17 @@ the default behaviour of the `pyopenwatch.EthereumNFTWatcher` is to log these in
 If you set the `logger_level` to `INFO`, newly found NFTs and mint transactions will
 be logged. If the `logger_level` is set to `DEBUG` the newly fetched transactions and
 blocks wil be logged.
+
+## Use Case
+
+This Python module was created as a part of a project to create a tool to find stolen
+images minted as NFTs to help artists recover their stolen art. As you can probably
+guess, I find NFTs and technology surrounding them less than ideal and I would
+appereciate if dApp and Blockchain developers would refrain from using this library.
+
+I would also like people who use this technology to limit illegal blockchain activity
+to get in touch.
+
+I understand that I cannot legally enforce this in any way, this is GPLv3 project,
+so _legally_ you are free to do whatever as long as you follow the License, but
+still, I hope my words hold some weight for people.
