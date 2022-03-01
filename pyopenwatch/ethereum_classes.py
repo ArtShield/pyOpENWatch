@@ -38,25 +38,7 @@ class Block:
     """
     block_hash: str
     parent_block_hash_id: str
-    transaction_ids: list[str]
-    parent_block: Optional['Block'] = None
-    transactions: Optional[list[Transaction]] = None
-
-    def set_transaction(self, transactions: list[Transaction]) -> None:
-        """
-        Set the transaction list of the transaction.
-
-        :param transactions: A list of transaction.
-        """
-        self.transactions = transactions
-
-    def set_parent_block(self, block: 'Block') -> None:
-        """
-        Set the parent block.
-
-        :param block: Previous block object of this block.
-        """
-        self.parent_block = block
+    transaction_hashes: list[str]
 
 
 @dataclass

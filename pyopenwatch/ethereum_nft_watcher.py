@@ -21,7 +21,7 @@ import logging
 
 from requests import post
 
-from .blockchain_classes import Block, Transaction, NFT
+from .ethereum_classes import Block, Transaction, NFT
 from .ethereum_utility import decode_return_value, decode_uint256_integer
 from .ethereum_exceptions import InvalidMintTransactionException, TransactionCouldNotFetch, CouldNotFetchNFTURL
 
@@ -197,7 +197,7 @@ class EthereumNFTWatcher:
         while prev_block_hash != terminal_block_hash and (block_count <= limit or limit == -1):
             self.logger.debug('Fetching block with hash %s', prev_block_hash)
             last_block = self._fetch_block(prev_block_hash)
-            for transaction_hash in last_block.transaction_ids:
+            for transaction_hash in last_block.transaction_hashes:
                 self.logger.debug(
                     f'Fetching transaction {transaction_hash}')
                 try:
