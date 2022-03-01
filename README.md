@@ -1,4 +1,11 @@
+[![Documentation Status](https://readthedocs.org/projects/pyopenwatch/badge/?version=latest)](https://pyopenwatch.readthedocs.io/en/latest/?badge=latest)
+![PyPI](https://img.shields.io/pypi/v/pyopenwatch)
+
 # pyOpENWatch
+
+```
+pip install pyopenwatch
+```
 
 Track NFTs as they are minted in the blockchain, with current tools,
 NFT data is hard to reach or depends on commercial third party
