@@ -4,7 +4,7 @@
 # pyOpENWatch
 
 ```
-pip install pyopenwatch
+pip install pyOpENWatch
 ```
 
 Fetch the NFTs that has been minted on the blockchain, with current tools,
