@@ -22,7 +22,7 @@ copyright = '2022, Ege Emir Ozkan'
 author = 'Ege Emir Ozkan'
 
 # The full version, including alpha/beta/rc tags
-release = '1.2.1'
+release = '1.2.2'
 
 
 # -- General configuration ---------------------------------------------------

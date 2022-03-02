@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from asyncio import wait_for
 from functools import lru_cache
+from time import sleep
 from typing import Any, Callable, Optional
 from uuid import uuid4
 import logging
@@ -196,6 +196,7 @@ class EthereumNFTWatcher:
         self.logger.info('Waiting for node to stop syncing.')
         syncing_done = False
         while not syncing_done:
+            sleep(1)
             syncing_done = self._send_json_rpc('eth_syncing', [])
         self.logger.info('Server sync complete, start fetching.')
 

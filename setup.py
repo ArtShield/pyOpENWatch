@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="pyOpENWatch",
-    version="1.2.1",
+    version="1.2.2",
     description="Fetch NFTs that were minted in the blockchain ",
     long_description=README,
     long_description_content_type="text/markdown",

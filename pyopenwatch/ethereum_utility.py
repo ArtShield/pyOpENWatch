@@ -19,7 +19,7 @@ def decode_return_value(value: str) -> str:
     Decode an ethereum return value, which is typically a group of bytes
         posing as an uint256 beacuse why not, I suppose/
     """
-    return int(value, base=16).to_bytes(256, 'big').replace(b'\x00', b'').decode('ascii').strip()
+    return int(value, base=16).to_bytes(256, 'big').replace(b'\x00', b'').decode('ascii').strip()[1:]
 
 
 def decode_uint256_integer(value: str) -> int:
