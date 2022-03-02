@@ -1,4 +1,4 @@
-# OpENWatch
+# pyOpENWatch
 # Copyright (C) 2021  Ege Emir Özkan
 
 # This program is free software: you can redistribute it and/or modify
@@ -46,6 +46,7 @@ class EthereumNFTWatcher:
         logging.basicConfig()
         self.logger = logging.getLogger('OpENWatchLogger')
         self.logger.setLevel(log_level)
+        self._most_recent_block_hash = '0x' + '0'*64
 
     def _send_json_rpc(self, method_name: str, params: list[Any]) -> Any:
         """
@@ -209,6 +210,7 @@ class EthereumNFTWatcher:
         nfts = []
         block_count = 0
         last_block_hash = self._latest_block.block_hash
+        self._most_recent_block_hash = last_block_hash
         prev_block_hash = last_block_hash
         while prev_block_hash != terminal_block_hash and (block_count <= limit or limit == -1):
             self.logger.debug('Fetching block with hash %s', prev_block_hash)
@@ -249,3 +251,13 @@ class EthereumNFTWatcher:
             block_count += 1
             prev_block_hash = last_block.parent_block_hash_id
         return nfts
+
+    @property
+    def most_recent_block_hash(self) -> str:
+        """Hash of the most recent block on the blockchain.
+
+        Hash of the block of the blockchain that was most recent
+        the last time self.fetch_nfts_until_block was run, if it
+        was not run prior, then the null address.
+        """
+        return self._most_recent_block_hash

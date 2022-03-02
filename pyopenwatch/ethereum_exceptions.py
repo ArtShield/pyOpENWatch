@@ -1,4 +1,4 @@
-# OpENWatch
+# pyOpENWatch
 # Copyright (C) 2021  Ege Emir Özkan
 
 # This program is free software: you can redistribute it and/or modify
