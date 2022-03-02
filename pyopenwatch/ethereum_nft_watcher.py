@@ -193,9 +193,11 @@ class EthereumNFTWatcher:
         """
         Wait for the node to stop syncing.
         """
+        self.logger.info('Waiting for node to stop syncing.')
         syncing_done = False
         while not syncing_done:
             syncing_done = self._send_json_rpc('eth_syncing', [])
+        self.logger.info('Server sync complete, start fetching.')
 
     def fetch_nfts_until_block(self,
                                terminal_block_hash: str = f'0x{"0" * 64}',
