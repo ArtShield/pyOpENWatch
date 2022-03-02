@@ -27,12 +27,20 @@ from .ethereum_exceptions import InvalidMintTransactionException, TransactionCou
 
 
 class EthereumNFTWatcher:
-    def __init__(self, host: str, port: str, log_level: int) -> None:
-        """
-        Initialise an NFT tracker.
+    def __init__(self, host: str, port: str | int, log_level: int) -> None:
+        """Initialise an NFT tracker.
 
-        :param host: Host address of the server.
+        This class takes the host and port address of an Ethereum
+        node and uses it to handle JSON RPC calls to the Ethereum
+        network to create a list of NFTs on the network.
+
+        :param host: Host address of the Ethereum node server.
+        :type host: str
         :param port: Port of the server.
+        :type port: str | int
+        :param log_level: Log level of the built in logger, compatible
+            with the Python logging levels.
+        :type log_level: int
         """
         self.address = f'{host}:{port}'
         logging.basicConfig()
@@ -114,6 +122,9 @@ class EthereumNFTWatcher:
             'eth_getTransactionReceipt', [transaction_hash]
         )
         try:
+            # This weird location holds the ID when the transaction
+            # is a mint transaction, https://ethereum.stackexchange.com/a/118674
+            # is my source for this information.
             return decode_uint256_integer(receipt['logs'][0]['topics'][3])
         except (KeyError, TypeError, IndexError):
             self.logger.debug(
@@ -177,18 +188,23 @@ class EthereumNFTWatcher:
         return False
 
     def fetch_nfts_until_block(self, terminal_block_hash: str = f'0x{"0" * 64}', limit: int = -1, callback: Optional[Callable[[NFT], None]] = None) -> list[NFT]:
-        """
+        """Traverse the blockchain to find the NFTs.
+
         Return a list of NFTs minted in transaction that have occurred between the
-            latest block in the Ethereum blockchain and the block with the given
-            block hash (or before the given limit of blocks are exceeded).
+        latest block in the Ethereum blockchain and the block with the given
+        block hash (or before the given limit of blocks are exceeded).
 
         :param terminal_block_hash: The hash of the latest block to be fetched,
             if not provided, go to the first block.
+        :type terminal_block_hash: str
         :param limit: Maximum number of blocks to be fetched, if not provided,
             ignored.
+        :type limit: int
         :param callback: Function to be called with the latest fetched
             NFT whenever an NFT is fetched, if not provided, nothing is done.
-        :return the list of NFTs.
+        :type callback: Optional[Callable[[NFT], None]]
+        :returns: the list of NFTs.
+        :rtype: list[NFT]
         """
         nfts = []
         block_count = 0

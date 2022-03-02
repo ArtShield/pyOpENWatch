@@ -43,8 +43,20 @@ class Block:
 
 @dataclass
 class NFT:
-    """
-    A Non-Fungiable Token "on" the blockchain
+    """A Non-Fungiable Token "on" the blockchain
+
+    Repreresents an NFT that is recorded on the blockchain.
+
+    :arg token_url: URL Of the NFT resource.
+    :type token_url: str
+    :arg token_id: ID of the NFT in its  contract.
+    :type token_id: int
+    :arg issuing_contract_address: Address of the ERC-721
+        smart contract that issued the NFT token.
+    :type issuing_contract_address: str
+    :arg minting_transaction_hash: Hash of the transaction
+        that minted the token.
+    :type minting_transaction_hash: str
     """
     token_url: str
     token_id: int

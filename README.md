@@ -7,7 +7,7 @@
 pip install pyopenwatch
 ```
 
-Track NFTs as they are minted in the blockchain, with current tools,
+Fetch the NFTs that has been minted on the blockchain, with current tools,
 NFT data is hard to reach or depends on commercial third party
 APIs.
 

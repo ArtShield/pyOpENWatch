@@ -10,8 +10,8 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="pyOpENWatch",
-    version="1.0.0",
-    description="Track NFTs as they are minted in the blockchain ",
+    version="1.0.1",
+    description="Fetch NFTs that were minted in the blockchain ",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/ArtShield/pyOpENWatch",
