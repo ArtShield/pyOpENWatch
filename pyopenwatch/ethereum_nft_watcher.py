@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from asyncio import wait_for
 from functools import lru_cache
 from typing import Any, Callable, Optional
 from uuid import uuid4
@@ -188,7 +189,20 @@ class EthereumNFTWatcher:
             return True
         return False
 
-    def fetch_nfts_until_block(self, terminal_block_hash: str = f'0x{"0" * 64}', limit: int = -1, callback: Optional[Callable[[NFT], None]] = None) -> list[NFT]:
+    def _wait_for_syncing_done(self) -> None:
+        """
+        Wait for the node to stop syncing.
+        """
+        syncing_done = False
+        while not syncing_done:
+            syncing_done = self._send_json_rpc('eth_syncing', [])
+
+    def fetch_nfts_until_block(self,
+                               terminal_block_hash: str = f'0x{"0" * 64}',
+                               limit: int = -1,
+                               callback: Optional[Callable[[
+                                   NFT], None]] = None,
+                               wait: bool = False) -> list[NFT]:
         """Traverse the blockchain to find the NFTs.
 
         Return a list of NFTs minted in transaction that have occurred between the
@@ -196,17 +210,22 @@ class EthereumNFTWatcher:
         block hash (or before the given limit of blocks are exceeded).
 
         :param terminal_block_hash: The hash of the latest block to be fetched,
-            if not provided, go to the first block.
+            if not provided, go to the first block, defaults to 0x00...
         :type terminal_block_hash: str
         :param limit: Maximum number of blocks to be fetched, if not provided,
             ignored.
         :type limit: int
         :param callback: Function to be called with the latest fetched
-            NFT whenever an NFT is fetched, if not provided, nothing is done.
+            NFT whenever an NFT is fetched, defaults to None.
         :type callback: Optional[Callable[[NFT], None]]
+        :param wait: Wait for the node to stop syncing before fetching the
+            NFTs, defaults to False
+        :type wait: bool
         :returns: the list of NFTs.
         :rtype: list[NFT]
         """
+        if wait:
+            self._wait_for_syncing_done()
         nfts = []
         block_count = 0
         last_block_hash = self._latest_block.block_hash
